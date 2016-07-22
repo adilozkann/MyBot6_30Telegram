@@ -567,9 +567,9 @@ $iChkDeploySettings[$DB] = 3 ;4 sides
 $iChkDeploySettings[$LB] = 3 ;4 sides
 $iChkDeploySettings[$MA] = 1 ;1 sides
 Global $iChkRedArea[$iModeCount+3], $iCmbSmartDeploy[$iModeCount+3], $iChkSmartAttack[$iModeCount+3][3], $iCmbSelectTroop[$iModeCount+3]
-$iChkRedArea[$DB] = 1
-$iChkRedArea[$LB] = 1
-$iChkRedArea[$MA] = 1
+$iChkRedArea[$DB] = 0
+$iChkRedArea[$LB] = 0
+$iChkRedArea[$MA] = 0
 
 Global $troopsToBeUsed[12]
 Global $useAllTroops[28] = [$eBarb, $eArch, $eGiant, $eGobl, $eWall, $eBall, $eWiza, $eHeal, $eDrag, $ePekk, $eMini, $eHogs, $eValk, $eGole, $eWitc, $eLava, $eKing, $eQueen, $eWarden, $eCastle, $eLSpell, $eHSpell, $eRSpell, $eJSpell, $eFSpell, $ePSpell, $eESpell, $eHaSpell]

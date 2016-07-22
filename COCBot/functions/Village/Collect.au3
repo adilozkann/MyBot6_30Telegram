@@ -34,13 +34,13 @@ Func Collect()
 
 	SetLog("Collecting Resources", $COLOR_BLUE)
 	If _Sleep($iDelayCollect2) Then Return
-	
+
 	; Collect function to Parallel Search , will run all pictures inside the directory
 	Local $directory = @ScriptDir & "\images\Resources\Collect"
 	; Setup arrays, including default return values for $return
 	Local $Filename = ""
 	Local $CollectXY
-	
+
 	Local $aResult = returnMultipleMatchesOwnVillage($directory)
 	If UBound($aResult) > 1 Then
 		For $i = 1 To UBound($aResult) - 1
@@ -54,10 +54,10 @@ Func Collect()
 						Click($CollectXY[$t][0], $CollectXY[$t][1], 1, 0, "#0430")
 						If _Sleep($iDelayCollect2) Then Return
 					Next
-				EndIf 
+				EndIf
 			EndIf
-		Next 
-	EndIf 
+		Next
+	EndIf
 
 	If _Sleep($iDelayCollect3) Then Return
 	checkMainScreen(False) ; check if errors during function

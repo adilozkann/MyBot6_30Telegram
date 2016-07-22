@@ -869,7 +869,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		$iChkRandomspeedatk[$DB] = 0
 	EndIf
 	If GUICtrlRead($chkSmartAttackRedAreaDB) = $GUI_CHECKED Then
-		$iChkRedArea[$DB] = 1
+		$iChkRedArea[$DB] = 0
 	Else
 		$iChkRedArea[$DB] = 0
 	EndIf
@@ -908,7 +908,7 @@ Func saveConfig() ;Saves the controls settings to the config
 		$iChkRandomspeedatk[$LB] = 0
 	EndIf
 	If GUICtrlRead($chkSmartAttackRedAreaAB) = $GUI_CHECKED Then
-		$iChkRedArea[$LB] = 1
+		$iChkRedArea[$LB] = 0
 	Else
 		$iChkRedArea[$LB] = 0
 	EndIf
@@ -2255,8 +2255,6 @@ Func saveConfig() ;Saves the controls settings to the config
 	IniWriteS($config, "android", "no.focus.tampering", ($NoFocusTampering ? "1" : "0"))
 
 
-	If $hFile <> -1 Then FileClose($hFile)
-
 	; by AwesomeGamer
 	If GUICtrlRead($chkDontRemove) = $GUI_CHECKED Then
 		IniWriteS($config, "troop", "DontRemove", 1)
@@ -2321,6 +2319,8 @@ Func saveConfig() ;Saves the controls settings to the config
 		IniWrite($config, "TrainLogout", "TrainLogoutMaxTime", 0)
 	EndIf
 	IniWrite($config, "TrainLogout", "TrainLogoutMaxTimeTXT", GUICtrlRead($txtTrainLogoutMaxTime))
+
+	If $hFile <> -1 Then FileClose($hFile)
 
 EndFunc   ;==>saveConfig
 

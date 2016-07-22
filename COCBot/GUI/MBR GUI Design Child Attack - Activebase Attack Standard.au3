@@ -29,8 +29,8 @@ $y += 15
 		$lblDeployAB = GUICtrlCreateLabel(GetTranslated(608,3, "Attack on")&":", $x, $y + 5, -1, -1)
 		$cmbDeployAB = GUICtrlCreateCombo("", $x + 55, $y, 120, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, GetTranslated(608,4, -1) & @CRLF & GetTranslated(608,5, -1) & @CRLF & GetTranslated(608,6, -1) & @CRLF & GetTranslated(608,29, "Attack on the single side closest to the Dark Elixir Storage") & @CRLF & GetTranslated(608,30, "Attack on the single side closest to the Townhall"), GetTranslated(608,7, -1))
-			GUICtrlSetData(-1, GetTranslated(608,8, -1) & "|" & GetTranslated(608,9, -1) & "|" & GetTranslated(608,10, -1) & "|" & GetTranslated(608,11, -1) & "|" & GetTranslated(608,31, "DE Side Attack") & "|" & GetTranslated(608,32, "TH Side Attack"), GetTranslated(608,11, -1))
-			;GUICtrlSetOnEvent(-1, "chkDESideEB")
+			GUICtrlSetData(-1, GetTranslated(608,8, -1) & "|" & GetTranslated(608,9, -1) & "|" & GetTranslated(608,10, -1) & "|" & GetTranslated(608,11, -1) & "|" & "Classic Four Fingers", GetTranslated(608,11, -1))
+			GUICtrlSetOnEvent(-1,"cmbDeployAB")
 
 		$y += 25
 		$lblUnitDelayAB = GUICtrlCreateLabel(GetTranslated(608,12, -1) & ":", $x, $y + 5, -1, -1)
@@ -38,12 +38,12 @@ $y += 15
 			GUICtrlSetTip(-1, $txtTip)
 		$cmbUnitDelayAB = GUICtrlCreateCombo("", $x + 55, $y, 36, 21, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetData(-1, "1|2|3|4|5|6|7|8|9|10", "5")
+			GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10", "5")
 		$lblWaveDelayAB = GUICtrlCreateLabel(GetTranslated(608,15, -1) & ":", $x + 100, $y + 5, -1, -1)
 			GUICtrlSetTip(-1, $txtTip)
 		$cmbWaveDelayAB = GUICtrlCreateCombo("", $x + 140, $y, 36, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetData(-1, "1|2|3|4|5|6|7|8|9|10", "5")
+			GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10", "5")
 		$y += 22
 		$chkRandomSpeedAtkAB = GUICtrlCreateCheckbox(GetTranslated(608,16, -1), $x, $y, -1, -1)
 			GUICtrlSetTip(-1, $txtTip)
@@ -52,7 +52,7 @@ $y += 15
 		$chkSmartAttackRedAreaAB = GUICtrlCreateCheckbox(GetTranslated(608,17, -1), $x, $y, -1, -1)
 			$txtTip = GetTranslated(608,18, -1)
 			GUICtrlSetTip(-1, $txtTip)
-			GUICtrlSetState(-1, $GUI_CHECKED)
+			GUICtrlSetState(-1, $GUI_UNCHECKED)
 			GUICtrlSetOnEvent(-1, "chkSmartAttackRedAreaAB")
 		$y += 22
 		$lblSmartDeployAB = GUICtrlCreateLabel(GetTranslated(608,19, -1) & ":", $x, $y + 5, -1, -1)

@@ -12,6 +12,25 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
+
+Func cmbDeployAB()
+   If _GUICtrlCombobox_GetCurSel($cmbDeployAB) = 4 Then
+	  GUICtrlSetState($chkSmartAttackRedAreaAB, $GUI_UNCHECKED)
+	  GUICtrlSetState($chkSmartAttackRedAreaAB, $GUI_DISABLE)
+   Else
+	  GUICtrlSetState($chkSmartAttackRedAreaAB, $GUI_ENABLE)
+   EndIf
+EndFunc
+
+Func cmbDeployDB()
+   If _GUICtrlCombobox_GetCurSel($cmbDeployDB) = 4 Then
+	  GUICtrlSetState($chkSmartAttackRedAreaDB, $GUI_UNCHECKED)
+	  GUICtrlSetState($chkSmartAttackRedAreaDB, $GUI_DISABLE)
+   Else
+	  GUICtrlSetState($chkSmartAttackRedAreaDB, $GUI_ENABLE)
+   EndIf
+EndFunc
+
 Func chkRandomSpeedAtkAB()
 	If GUICtrlRead($chkRandomSpeedAtkAB) = $GUI_CHECKED Then
 		;$iChkABRandomSpeedAtk = 1
@@ -52,12 +71,12 @@ EndFunc   ;==>chkRandomSpeedAtkDB
 
 Func chkSmartAttackRedAreaDB()
 	If GUICtrlRead($chkSmartAttackRedAreaDB) = $GUI_CHECKED Then
-		$iChkRedArea[$LB] = 1
+		$iChkRedArea[$DB] = 1
 		For $i = $lblSmartDeployDB To $picAttackNearDarkElixirDrillDB
 			GUICtrlSetState($i, $GUI_SHOW)
 		Next
 	Else
-		$iChkRedArea[$LB] = 0
+		$iChkRedArea[$DB] = 0
 		For $i = $lblSmartDeployDB To $picAttackNearDarkElixirDrillDB
 			GUICtrlSetState($i, $GUI_HIDE)
 		Next

@@ -338,7 +338,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		IniReadS($iCmbSelectTroop[$LB], $config, "attack", "ABSelectTroop", "0")
 		IniReadS($iCmbSelectTroop[$TS], $config, "attack", "TSSelectTroop", "0")
 
-		IniReadS($iChkRedArea[$DB], $config, "attack", "DBSmartAttackRedArea", "1")
+		IniReadS($iChkRedArea[$DB], $config, "attack", "DBSmartAttackRedArea", "0")
 
 		IniReadS($iCmbSmartDeploy[$DB], $config, "attack", "DBSmartAttackDeploy", "0")
 
@@ -346,7 +346,7 @@ Func readConfig($inputfile = $config, $partial = False) ;Reads config and sets i
 		IniReadS($iChkSmartAttack[$DB][1], $config, "attack", "DBSmartAttackElixirCollector", "0")
 		IniReadS($iChkSmartAttack[$DB][2], $config, "attack", "DBSmartAttackDarkElixirDrill", "0")
 
-		IniReadS($iChkRedArea[$LB], $config, "attack", "ABSmartAttackRedArea", "1")
+		IniReadS($iChkRedArea[$LB], $config, "attack", "ABSmartAttackRedArea", "0")
 		IniReadS($iCmbSmartDeploy[$LB], $config, "attack", "ABSmartAttackDeploy", "1")
 
 		IniReadS($iChkSmartAttack[$LB][0], $config, "attack", "ABSmartAttackGoldMine", "0")
