@@ -96,13 +96,7 @@ Func getChatString($x_start, $y_start, $language) ; -> Get string chat request -
 EndFunc   ;==>getChatString
 
 Func getBuilders($x_start, $y_start);  -> Gets Builders number - main screen --> getBuilders(324,23)  coc-profile
-	Local $sread_value = getOcrAndCapture("coc-Builders", $x_start, $y_start, 40, 18, True)
-	If StringInStr($sread_value, "#") > 0 Then
-		Return $sread_value
-	Else
-		SetLog("Cannot get Free/Total Builders", $COLOR_RED)
-		Return ("0#0")
-	EndIf
+	Return getOcrAndCapture("coc-Builders", $x_start, $y_start, 40, 18, True)
 EndFunc   ;==>getBuilders
 
 Func getProfile($x_start, $y_start);  -> Gets Attack Win/Defense Win/Donated/Received values - profile screen --> getProfile(160,268)  troops donation
@@ -125,7 +119,7 @@ Func getArmyTroopKind($x_start, $y_start);  -> Gets kind of troop on army camp o
 	Return getOcrAndCapture("coc-train-t-kind", $x_start, $y_start, 59, 11, True)
 EndFunc   ;==>getArmyTroopKind
 
-Func getArmyCampCap($x_start, $y_start);  -> Gets army camp capacity --> train.au3
+Func getArmyCampCap($x_start, $y_start);  -> Gets army camp capacity --> train.au3, and used to read CC request time remaining
 	Return getOcrAndCapture("coc-army", $x_start, $y_start, 66, 14, True)
 EndFunc   ;==>getArmyCampCap
 
@@ -192,17 +186,41 @@ Func getOcrPBTtime($x_start, $y_start);  -> Get the Time until PBT starts from P
 	Return getOcrAndCapture("coc-pbttime", $x_start, $y_start, 59, 15)
 EndFunc   ;==>getOcrPBTtime
 
-Func getOcrMaintenanceTime($x_start, $y_start);  -> Get the Text with time till maintenance is over from reload msg(171, 375)
-	Return getOcrAndCapture("coc-reloadmsg", $x_start, $y_start, 116, 19, True)
+Func getOcrMaintenanceTime($x_start, $y_start, $sLogText = Default, $LogTextColor = Default, $bSilentSetLog = Default)
+	;  -> Get the Text with time till maintenance is over from reload msg(171, 375)
+	Local $result = getOcrAndCapture("coc-reloadmsg", $x_start, $y_start, 116, 19, True)
+	Local $String = $sLogText & " " & $result
+	If $debugSetlog = 1 And $sLogText <> Default And IsString($sLogText) Then ; if enabled generate debug log message
+		SetDebugLog($String, $LogTextColor, $bSilentSetLog)
+	ElseIf $result <> "" Then ;
+		SetDebugLog($String, $LogTextColor, True) ; if result found, add to log file
+	EndIF
+	Return $result
 EndFunc   ;==>getOcrMaintenanceTime
 
-Func getOcrRateCoc($x_start, $y_start);  -> Get the Text with time till maintenance is over from reload msg(228, 402)
-	Return getOcrAndCapture("coc-ratecoc", $x_start, $y_start, 42, 18, True)
+Func getOcrRateCoc($x_start, $y_start, $sLogText = Default, $LogTextColor = Default, $bSilentSetLog = Default)
+	;  -> Get the Text with time till maintenance is over from reload msg(228, 402)
+	Local $result = getOcrAndCapture("coc-ratecoc", $x_start, $y_start, 42, 18, True)
+	Local $String = $sLogText & " " & $result
+	If $debugSetlog = 1 And $sLogText <> Default And IsString($sLogText) Then ; if enabled generate debug log message
+		SetDebugLog($String, $LogTextColor, $bSilentSetLog)
+	ElseIf $result <> "" Then ;
+		SetDebugLog($String, $LogTextColor, True) ; if result found, add to log file
+	EndIf
+	Return $result
 EndFunc   ;==>getOcrRateCoc
 
 Func getRemainTLaboratory($x_start, $y_start) ; read actual time remaining in Lab for current upgrade (336,260)
 	Return getOcrAndCapture("coc-RemainLaboratory", $x_start, $y_start, 192, 24)
 EndFunc   ;==>getRemainTLaboratory
+
+Func getRemainTHero($x_start, $y_start) ; Get time remaining for hero to be ready for attack from train window, BK:443,504 AQ:504,504 GW:565:504
+	Return getOcrAndCapture("coc-remainhero", $x_start, $y_start, 28, 12, True)
+EndFunc   ;==>getRemainTHero
+
+Func getHeroStatus($x_start, $y_start) ; Get status/type_of_Hero from Hero Slots in training overview window, Slot1:464,446 Slot2:526,446 Slot3:588:446
+	Return getOcrAndCapture("coc-herostatus", $x_start, $y_start, 20, 20)
+EndFunc   ;==>getHeroStatus
 
 
 Func getOcrAndCapture($language, $x_start, $y_start, $width, $height, $removeSpace = False)

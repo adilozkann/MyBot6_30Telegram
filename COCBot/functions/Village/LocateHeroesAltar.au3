@@ -15,15 +15,21 @@
 ; ===============================================================================================================================
 
 
-
-
 Func LocateQueenAltar()
+	Local $wasRunState = $RunState
+	$RunState = True
+	AndroidShield("LocateQueenAltar 1") ; Update shield status due to manual $RunState
+	Local $Result = _LocateQueenAltar()
+	$RunState = $wasRunState
+	AndroidShield("LocateQueenAltar 2") ; Update shield status due to manual $RunState
+	Return $Result
+EndFunc   ;==>LocateQueenAltar
+
+Func _LocateQueenAltar()
 
 	Local $stext, $MsgBox, $iSilly = 0, $iStupid = 0, $sErrorText = "", $sInfo
 
-	$RunState = True
 	WinGetAndroidHandle()
-	WinActivate($HWnD)
 	checkMainScreen(False)
 
 	If _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1], True) <> Hex($aTopLeftClient[2], 6) Or _GetPixelColor($aTopRightClient[0], $aTopRightClient[1], True) <> Hex($aTopRightClient[2], 6) Then
@@ -41,7 +47,6 @@ Func LocateQueenAltar()
 		$MsgBox = _ExtMsgBox(0, GetTranslated(640,1,"Ok|Cancel"), GetTranslated(640,35,"Locate Queen Altar"), $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
 			WinGetAndroidHandle()
-			WinActivate($HWnD)
 			ClickP($aTopLeftClient)
 			Local $aPos = FindPos()
 			$QueenAltarPos[0] = $aPos[0]
@@ -146,20 +151,30 @@ Func LocateQueenAltar()
 	IniWrite($building, "other", "xQueenAltarPos", $QueenAltarPos[0])
 	IniWrite($building, "other", "yQueenAltarPos", $QueenAltarPos[1])
 
-EndFunc   ;==>LocateQueenAltar
-
-
+EndFunc   ;==>_LocateQueenAltar
 
 Func LocateKingAltar()
+	Local $wasRunState = $RunState
+	$RunState = True
+	AndroidShield("LocateKingAltar 1") ; Update shield status due to manual $RunState
+	Local $Result = _LocateKingAltar()
+	$RunState = $wasRunState
+	AndroidShield("LocateKingAltar 2") ; Update shield status due to manual $RunState
+	Return $Result
+EndFunc   ;==>LocateKingAltar
+
+Func _LocateKingAltar()
 
 	Local $stext, $MsgBox, $iSilly = 0, $iStupid = 0, $sErrorText = "", $sInfo
-	$RunState = True
 	WinGetAndroidHandle()
-	WinActivate($HWnD)
 	checkMainScreen(False)
-	$bDisableBreakCheck = True ; stop early PB log off when locating upgrades
-	Collect()
-	$bDisableBreakCheck = False ; restore flag
+
+	If _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1], True) <> Hex($aTopLeftClient[2], 6) Or _GetPixelColor($aTopRightClient[0], $aTopRightClient[1], True) <> Hex($aTopRightClient[2], 6) Then
+		Zoomout()
+		$bDisableBreakCheck = True ; stop early PB log off when locating upgrades
+		Collect()
+		$bDisableBreakCheck = False ; restore flag
+	EndIf
 
 	SetLog("Locating King Altar...", $COLOR_BLUE)
 	While 1
@@ -170,7 +185,6 @@ Func LocateKingAltar()
 		$MsgBox = _ExtMsgBox(0, GetTranslated(640,1,"Ok|Cancel"), GetTranslated(640,40,"Locate King Altar"), $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
 			WinGetAndroidHandle()
-			WinActivate($HWnD)
 			Local $aPos = FindPos()
 			$KingAltarPos[0] = $aPos[0]
 			$KingAltarPos[1] = $aPos[1]
@@ -273,10 +287,20 @@ Func LocateKingAltar()
 	IniWrite($building, "other", "xKingAltarPos", $KingAltarPos[0])
 	IniWrite($building, "other", "yKingAltarPos", $KingAltarPos[1])
 
-EndFunc   ;==>LocateKingAltar
-
+EndFunc   ;==>_LocateKingAltar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 Func LocateWardenAltar()
+	Local $wasRunState = $RunState
+	$RunState = True
+	AndroidShield("LocateWardenAltar 1") ; Update shield status due to manual $RunState
+	Local $Result = _LocateWardenAltar()
+	$RunState = $wasRunState
+	AndroidShield("LocateWardenAltar 2") ; Update shield status due to manual $RunState
+	Return $Result
+EndFunc   ;==>LocateWardenAltar
+
+Func _LocateWardenAltar()
 	Local $stext, $MsgBox, $iSilly = 0, $iStupid = 0, $sErrorText = "", $sInfo
 
 	If Number($iTownHallLevel) < 11 Then
@@ -284,9 +308,7 @@ Func LocateWardenAltar()
 		Return
 	EndIf
 
-	$RunState = True
 	WinGetAndroidHandle()
-	WinActivate($HWnD)
 	checkMainScreen(False)
 
 	If _GetPixelColor($aTopLeftClient[0], $aTopLeftClient[1], True) <> Hex($aTopLeftClient[2], 6) And _GetPixelColor($aTopRightClient[0], $aTopRightClient[1], True) <> Hex($aTopRightClient[2], 6) Then
@@ -305,7 +327,6 @@ Func LocateWardenAltar()
 		$MsgBox = _ExtMsgBox(0, GetTranslated(640,1,"Ok|Cancel"), GetTranslated(640,42,"Locate Grand Warden Altar"), $stext, 15, $frmBot)
 		If $MsgBox = 1 Then
 			WinGetAndroidHandle()
-			WinActivate($HWnD)
 			Local $aPos = FindPos()
 			$WardenAltarPos[0] = $aPos[0]
 			$WardenAltarPos[1] = $aPos[1]
@@ -410,5 +431,5 @@ Func LocateWardenAltar()
 	IniWrite($building, "other", "yWardenAltarPos", $WardenAltarPos[1])
 
 
-EndFunc   ;==>LocateWardenAltar
+EndFunc   ;==>_LocateWardenAltar
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

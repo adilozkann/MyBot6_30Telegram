@@ -5,7 +5,7 @@
 ; Parameters ....: $debug               - [optional]
 ; Return values .: None
 ; Author ........: Sardo (2016)
-; Modified ......: mikemikemikecoc (2016)
+; Modified ......:
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -166,31 +166,31 @@ Func ParseAttackCSV($debug = False)
 							EndIf
 						Else
 							$isIndexPercent = 0
-							If UBound($indexvect) > 1 Then
+						If UBound($indexvect) > 1 Then
+							$indexArray = 0
+							If Int($indexvect[0]) > 0 And Int($indexvect[1]) > 0 Then
+								$index1 = Int($indexvect[0])
+								$index2 = Int($indexvect[1])
+							Else
+								$index1 = 1
+								$index2 = 1
+							EndIf
+						Else
+							$indexArray = StringSplit($value2, ",", 2)
+							If UBound($indexArray) > 1 Then
+								$index1 = 0
+								$index2 = UBound($indexArray) - 1
+							Else
 								$indexArray = 0
-								If Int($indexvect[0]) > 0 And Int($indexvect[1]) > 0 Then
-									$index1 = Int($indexvect[0])
-									$index2 = Int($indexvect[1])
+								If Int($value2) > 0 Then
+									$index1 = Int($value2)
+									$index2 = Int($value2)
 								Else
 									$index1 = 1
 									$index2 = 1
 								EndIf
-							Else
-								$indexArray = StringSplit($value2, ",", 2)
-								If UBound($indexArray) > 1 Then
-									$index1 = 0
-									$index2 = UBound($indexArray) - 1
-								Else
-									$indexArray = 0
-									If Int($value2) > 0 Then
-										$index1 = Int($value2)
-										$index2 = Int($value2)
-									Else
-										$index1 = 1
-										$index2 = 1
-									EndIf
-								EndIf
 							EndIf
+						EndIf
 						EndIf
 						
 						;qty...
@@ -208,25 +208,25 @@ Func ParseAttackCSV($debug = False)
 							EndIf
 						Else
 							$isQtyPercent = 0
-							If UBound($qtyvect) > 1 Then
-								If Int($qtyvect[0]) > 0 And Int($qtyvect[1]) > 0 Then
-									$qty1 = Int($qtyvect[0])
-									$qty2 = Int($qtyvect[1])
-								Else
-									$index1 = 1
-									$qty2 = 1
-								EndIf
+						If UBound($qtyvect) > 1 Then
+							If Int($qtyvect[0]) > 0 And Int($qtyvect[1]) > 0 Then
+								$qty1 = Int($qtyvect[0])
+								$qty2 = Int($qtyvect[1])
 							Else
-								If Int($value3) > 0 Then
-									$qty1 = Int($value3)
-									$qty2 = Int($value3)
-								Else
-									$qty1 = 1
-									$qty2 = 1
-								EndIf
+								$index1 = 1
+								$qty2 = 1
+							EndIf
+						Else
+							If Int($value3) > 0 Then
+								$qty1 = Int($value3)
+								$qty2 = Int($value3)
+							Else
+								$qty1 = 1
+								$qty2 = 1
 							EndIf
 						EndIf
-
+						EndIf
+						
 						;delay between points
 						Local $delaypoints1, $delaypoints2, $delaypointsvect
 						$delaypointsvect = StringSplit($value5, "-", 2)
@@ -309,6 +309,10 @@ Func ParseAttackCSV($debug = False)
 						EndIf
 						DropTroopFromINI($value1, $index1, $index2, $indexArray, $qty1, $qty2, $value4, $delaypoints1, $delaypoints2, $delaydrop1, $delaydrop2, $sleepdrop1, $sleepdrop2, $sleepbeforedrop1, $sleepbeforedrop2, $isQtyPercent, $isIndexPercent, $debug)
 						ReleaseClicks($AndroidAdbClicksTroopDeploySize)
+						If _Sleep($iDelayRespond) Then ; check for pause/stop, close file before return
+							FileClose($f)
+							Return
+						EndIf
 					Case "WAIT"
 						ReleaseClicks()
 						;sleep time
@@ -350,6 +354,10 @@ Func ParseAttackCSV($debug = False)
 							;READ RESOURCES
 							$Gold = getGoldVillageSearch(48, 69)
 							$Elixir = getElixirVillageSearch(48, 69 + 29)
+							If _Sleep($iDelayRespond) Then ; check for pause/stop, close file before return
+								FileClose($f)
+								Return
+							EndIf
 							$Trophies = getTrophyVillageSearch(48, 69 + 99)
 							If $Trophies <> "" Then ; If trophy value found, then base has Dark Elixir
 								$DarkElixir = getDarkElixirVillageSearch(48, 69 + 57)
@@ -376,7 +384,10 @@ Func ParseAttackCSV($debug = False)
 								$exitOneStar = 1
 								ExitLoop
 							EndIf
-							If _sleep($iDelayAttackCSV3) Then Return ;wait 5 ms to read commands from GUI
+							If _Sleep($iDelayRespond) Then ; check for pause/stop, close file before return
+								FileClose($f)
+								Return
+							EndIf
 							CheckHeroesHealth()
 						WEnd
 						If $exitOneStar = 1 Or $exitTwoStars = 1 Or $exitNoResources = 1 Then ExitLoop ;stop parse CSV file, start exit battle procedure
@@ -388,6 +399,7 @@ Func ParseAttackCSV($debug = False)
 						ReleaseClicks()
 						Setlog("Calculate main side... ")
 						If StringUpper($value8) = "TOP-LEFT" Or StringUpper($value8) = "TOP-RIGHT" Or StringUpper($value8) = "BOTTOM-LEFT" Or StringUpper($value8) = "BOTTOM-RIGHT" Then
+							$MAINSIDE = StringUpper($value8)
 							$MAINSIDEMAINSIDE = StringUpper($value8)
 							Setlog("Forced side: " & StringUpper($value8))
 						Else
@@ -570,6 +582,10 @@ Func ParseAttackCSV($debug = False)
 				If StringLeft($line, 7) <> "NOTE  |" And StringLeft($line, 7) <> "      |" And StringStripWS(StringUpper($line), 2) <> "" Then Setlog("attack row error, discard.: " & $line, $COLOR_RED)
 			EndIf
 			CheckHeroesHealth()
+			If _Sleep($iDelayRespond) Then ; check for pause/stop after each line of CSV, close file before return
+				FileClose($f)
+				Return
+			EndIf
 		WEnd
 
 		SetLog("Dropping left over troops", $COLOR_BLUE)

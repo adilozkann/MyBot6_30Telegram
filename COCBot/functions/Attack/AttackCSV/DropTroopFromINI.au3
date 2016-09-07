@@ -18,7 +18,7 @@
 ;                  $debug               - [optional] Default is False.
 ; Return values .: None
 ; Author ........: Sardo (2016)
-; Modified ......: mikemikemikecoc (2016)
+; Modified ......:
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
@@ -105,12 +105,16 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 			If $ichkJumpSpell[$iMatchMode] = 0 Then $usespell = False
 		Case $eFSpell
 			If $ichkFreezeSpell[$iMatchMode] = 0 Then $usespell = False
+;		Case $eCSpell
+;			If $ichkCloneSpell[$iMatchMode] = 0 Then $usespell = False
 		Case $ePSpell
 			If $ichkPoisonSpell[$iMatchMode] = 0 Then $usespell = False
 		Case $eESpell
 			If $ichkEarthquakeSpell[$iMatchMode] = 0 Then $usespell = False
 		Case $eHaSpell
 			If $ichkHasteSpell[$iMatchMode] = 0 Then $usespell = False
+;		Case $eSkSpell
+;			If $ichkSkeletonSpell[$iMatchMode] = 0 Then $usespell = False
 	EndSwitch
 
    If $delayPointmin = 0 Then $delayPointmin = 50
@@ -261,15 +265,21 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 					$delayDropLast = $delayDropLast / $iCSVSpeeds[$isldSelectedCSVSpeed[$iMatchMode]]
 
 					Switch Eval("e" & $troopName)
-						Case $eBarb To $eLava ; drop normal troops
+						Case $eBarb To $eBowl ; drop normal troops
 							If $debug = True Then
-								Setlog("AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
+								Setlog("PureClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ")")
+								;PureClick($pixel[0], $pixel[1], $qty2, $delayPoint)
 							Else
-								If $AndroidAdbClicksEnabled Then
-									; AttackClick($pixel[0], $pixel[1], $qty2, SetSleep(0), 0, "#0666") ; Fastest
-									AttackFClick($pixel[0], $pixel[1], $qty2, Int($delayPoint/4), 0, "#0666")
+								If ( $Android = "BlueStacks" ) Or ( $Android = "BlueStacks2" ) Then
+									PureClick($pixel[0], $pixel[1], $qty2, $delayPoint)
 								Else
-									AttackFClick($pixel[0], $pixel[1], $qty2, $delayPoint, 0, "#0666")
+									If $AndroidAdbClicksEnabled Then 
+										;AttackClick($pixel[0], $pixel[1], $qty2, SetSleep(0), 0, "#0667")
+										AttackClick($pixel[0], $pixel[1], $qty2, Int($delayPoint/4), 0, "#0666")
+									Else
+										;AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
+										AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, 0, "#0666")
+									EndIf
 								EndIf
 							EndIf
 						Case $eKing
@@ -296,9 +306,9 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 							Else
 								dropCC($pixel[0], $pixel[1], $CC)
 							EndIf
-						Case $eLSpell To $eHaSpell
+						Case $eLSpell To $eSkSpell
 							If $debug = True Then
-								Setlog("Drop Spell AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0667)")
+								Setlog("Drop Spell AttackClick( " & $pixel[0] & ", " & $pixel[1] & " , " & $qty2 & ", " & $delayPoint & ",#0666)")
 							Else
 								AttackClick($pixel[0], $pixel[1], $qty2, $delayPoint, $delayDropLast, "#0667")
 							EndIf
@@ -355,7 +365,7 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 
 		; CSV Deployment Speed Mod
 		$sleepafter = $sleepafter / $iCSVSpeeds[$isldSelectedCSVSpeed[$iMatchMode]]
-
+		
 		If $sleepafter > 50 And IsKeepClicksActive() = False Then
 			debugAttackCSV(">> delay after drop all troops: " & $sleepafter)
 			If $sleepafter <= 1000 Then  ; check SLEEPAFTER value is less than 1 second?
@@ -373,11 +383,3 @@ Func DropTroopFromINI($vectors, $indexStart, $indexEnd, $indexArray, $qtaMin, $q
 	EndIf
 
 EndFunc   ;==>DropTroopFromINI
-
-Func AttackFClick($x, $y, $times = 1, $speed = 0, $afterDelay = 0, $debugtxt = "")
-   Local $timer = TimerInit()
-   Local $result = Click($x, $y, $times, $speed, $debugtxt)
-   Local $delay = $times * $speed + $afterDelay - TimerDiff($timer)
-   If IsKeepClicksActive() = False And $delay > 0 Then _Sleep($delay, False)
-   Return $result
-EndFunc

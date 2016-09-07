@@ -22,8 +22,6 @@ Func CloseBlueStacks()
 	Local $iIndex, $bOops = False
 	Local $aServiceList[4] = ["BstHdAndroidSv", "BstHdLogRotatorSvc", "BstHdUpdaterSvc", "bthserv"]
 
-	SetLog("Stopping BlueStacks ....", $COLOR_BLUE)
-
 	If Not InitAndroid() Then Return
 
 	RunWait($__BlueStacks_Path & "HD-Quit.exe")
@@ -63,11 +61,7 @@ Func CloseBlueStacks()
 
 	If $debugsetlog = 1 And $bOops Then
 		SetLog("BS Kill Failed to stop service", $COLOR_RED)
-	ElseIf Not $bOops Then
-		SetLog("BS stopped successfully", $COLOR_GREEN)
 	EndIf
-
-	RemoveGhostTrayIcons("BlueStacks") ; Remove ghost BS icon if left behind due forced taskkill
 
 	If $bOops Then
 		SetError(1, @extended, -1)
@@ -79,8 +73,6 @@ Func CloseBlueStacks2()
 
 	Local $bOops = False
 
-	SetLog("Stopping " & $Android & "....", $COLOR_BLUE)
-
 	If Not InitAndroid() Then Return
 
 	RunWait($__BlueStacks_Path & "HD-Quit.exe")
@@ -91,18 +83,6 @@ Func CloseBlueStacks2()
 	EndIf
 
 	If _Sleep(2000) Then Return ; wait a bit
-
-	; Check if HD-FrontEnd.exe terminated
-	$bOops = ProcessExists2($AndroidProgramPath) <> 0
-
-	If $debugsetlog = 1 And $bOops Then
-		SetLog($Android & " failed to quit all processes", $COLOR_RED)
-	ElseIf Not $bOops Then
-		SetLog($Android & " stopped successfully", $COLOR_GREEN)
-	EndIf
-
-	;RemoveGhostTrayIcons("BlueStacks Agent Online")  ; Remove ghost BS icon if left behind due forced taskkill, early BS2 version
-	RemoveGhostTrayIcons("App Player Online") ; Remove ghost BS icon if left behind due forced taskkill
 
 	If $bOops Then
 		SetError(1, @extended, -1)

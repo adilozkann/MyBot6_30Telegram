@@ -43,6 +43,7 @@ Func LauchTroop($troopKind, $nbSides, $waveNb, $maxWaveNb, $slotsPerEdge = 0)
 	If $waveNb = 0 Then $waveName = "last"
 	SetLog("Dropping " & $waveName & " wave of " & $troopNb & " " & $name, $COLOR_GREEN)
 	DropTroop($troop, $nbSides, $troopNb, $slotsPerEdge)
+
 	Return True
 EndFunc   ;==>LauchTroop
 
@@ -52,7 +53,7 @@ Func LaunchTroop2($listInfoDeploy, $CC, $King, $Queen, $Warden)
 	Local $pixelRandomDrop[2]
 	Local $pixelRandomDropcc[2]
 
-	If ($iChkRedArea[$iMatchMode] = 1 And $iChkDeploySettings[$iMatchMode] <> 4) Then
+	If ($iChkRedArea[$iMatchMode] = 1) Then
 		For $i = 0 To UBound($listInfoDeploy) - 1
 			Local $troop = -1
 			Local $troopNb = 0

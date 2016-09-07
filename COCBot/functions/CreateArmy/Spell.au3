@@ -17,11 +17,11 @@
 Func BrewSpells()
 
 	; ATTENTION : This function only works if the ArmyOverView Windows is open
-	Local $iLightningSpell, $iHealSpell, $iRageSpell, $iJumpSpell, $iFreezeSpell, $iPoisonSpell, $iEarthSpell, $iHasteSpell
+	Local $iLightningSpell, $iHealSpell, $iRageSpell, $iJumpSpell, $iFreezeSpell, $iCloneSpell, $iPoisonSpell, $iEarthSpell, $iHasteSpell, $iSkeletonSpell
 
 	If $iTotalCountSpell = 0 Then Return
 
-	If $numFactorySpellAvaiables = 1 And ($iLightningSpellComp + $iRageSpellComp + $iHealSpellComp + $iJumpSpellComp + $iFreezeSpellComp) > 0 Then
+	If $numFactorySpellAvaiables = 1 And ($iLightningSpellComp > 0 Or $iRageSpellComp > 0 Or $iHealSpellComp > 0 Or $iJumpSpellComp > 0 Or $iFreezeSpellComp > 0 Or $iCloneSpellComp > 0) Then
 		$iBarrHere = 0
 		While Not (isSpellFactory())
 			If Not (IsTrainPage()) Then Return
@@ -32,8 +32,8 @@ Func BrewSpells()
 		WEnd
 		If isSpellFactory() Then
 			If $iLightningSpellComp > 0 Then ; Lightning Spells
-				Local $iTempLightningSpell = Number(getBarracksTroopQuantity(175 + 107 * 0, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempLightningSpell = Number(getBarracksTroopQuantity(175 + 107 * 0, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempLightningSpell = $iLightningSpellComp Then ; check if replacement spells trained,
 						$iLightningSpell = 0
 					Else
@@ -62,8 +62,8 @@ Func BrewSpells()
 				EndIf
 			EndIf
 			If $iHealSpellComp > 0 Then ; Heal Spells
-				Local $iTempHealSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempHealSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempHealSpell = $iHealSpellComp Then ; check if replacement spells trained,
 						$iHealSpell = 0
 					Else
@@ -92,8 +92,8 @@ Func BrewSpells()
 				EndIf
 			EndIf
 			If $iRageSpellComp > 0 Then ; Rage Spells
-				Local $iTempRageSpell = Number(getBarracksTroopQuantity(175 + 107 * 2, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempRageSpell = Number(getBarracksTroopQuantity(175 + 107 * 2, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempRageSpell = $iRageSpellComp Then ; check if replacement spells trained,
 						$iRageSpell = 0
 					Else
@@ -122,8 +122,8 @@ Func BrewSpells()
 				EndIf
 			EndIf
 			If $iJumpSpellComp > 0 Then ; Jump Spells
-				Local $iTempJumpSpell = Number(getBarracksTroopQuantity(175 + 107 * 3, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempJumpSpell = Number(getBarracksTroopQuantity(175 + 107 * 3, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempJumpSpell = $iJumpSpellComp Then ; check if replacement spells trained,
 						$iJumpSpell = 0
 					Else
@@ -152,8 +152,8 @@ Func BrewSpells()
 				EndIf
 			EndIf
 			If $iFreezeSpellComp > 0 Then ; Freeze Spells
-				Local $iTempFreezeSpell = Number(getBarracksTroopQuantity(175 + 107 * 4, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempFreezeSpell = Number(getBarracksTroopQuantity(175 + 107 * 4, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempFreezeSpell = $iFreezeSpellComp Then ; check if replacement spells trained,
 						$iFreezeSpell = 0
 					Else
@@ -181,12 +181,42 @@ Func BrewSpells()
 					Setlog("Already done Freeze Spell(s)")
 				EndIf
 			EndIf
+			If $iCloneSpellComp > 0 Then ; Clone Spells
+				Local $iTempCloneSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 401 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
+					If $iTempCloneSpell = $iCloneSpellComp Then ; check if replacement spells trained,
+						$iCloneSpell = 0
+					Else
+						$iCloneSpell = $iCloneSpellComp - $iTempCloneSpell ; add spells to queue to match GUI
+					EndIf
+				Else
+					$iCloneSpell = $iCloneSpellComp - ($CurCloneSpell + $iTempCloneSpell) ; not full, add more spell if needed
+				EndIf
+				If $debugsetlogTrain = 1 Then SetLog("Making Clone Spell: " & $iCloneSpell)
+				If _sleep($iDelayTrain2) Then Return
+				If $iCloneSpell > 0 Then
+					If _ColorCheck(_GetPixelColor(235 + 107 * 1, 480 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False Then ; White into number 0
+						setlog("Not enough Elixir to create Clone Spell", $COLOR_RED)
+						Return
+					ElseIf _ColorCheck(_GetPixelColor(200, 346 + $midOffsetY, True), Hex(0x414141, 6), 20) Then
+						setlog("Spell Factory Full", $COLOR_RED)
+						Return
+					Else
+						If $iCloneSpell > 0 Then
+							GemClick(220 + 107 * 1, 450 + $midOffsetY, $iCloneSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iCloneSpell & " Clone Spell(s)", $COLOR_BLUE)
+						EndIf
+					EndIf
+				Else
+					Setlog("Already done Clone Spell(s)")
+				EndIf
+			EndIf
 		Else
 			SetLog("Spell Factory not found...", $COLOR_BLUE)
 		EndIf
 	EndIf
 
-	If $numFactoryDarkSpellAvaiables = 1 And ($iPoisonSpellComp + $iEarthSpellComp + $iHasteSpellComp) > 0 Then
+	If $numFactoryDarkSpellAvaiables = 1 And ($iPoisonSpellComp > 0 Or $iEarthSpellComp > 0 Or $iHasteSpellComp > 0 Or $iSkeletonSpellComp > 0) Then
 		$iBarrHere = 0
 		While Not (isDarkSpellFactory())
 			If Not (IsTrainPage()) Then Return
@@ -197,8 +227,8 @@ Func BrewSpells()
 		WEnd
 		If isDarkSpellFactory() Then
 			If $iPoisonSpellComp > 0 Then ; Poison Spells
-				Local $iTempPoisonSpell = Number(getBarracksTroopQuantity(175 + 107 * 0, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempPoisonSpell = Number(getBarracksTroopQuantity(175 + 107 * 0, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempPoisonSpell = $iPoisonSpellComp Then ; check if replacement spells trained,
 						$iPoisonSpell = 0
 					Else
@@ -231,8 +261,8 @@ Func BrewSpells()
 			EndIf
 
 			If $iEarthSpellComp > 0 Then ; EarthQuake Spells
-				Local $iTempEarthSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempEarthSpell = Number(getBarracksTroopQuantity(175 + 107 * 1, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempEarthSpell = $iEarthSpellComp Then ; check if replacement spells trained,
 						$iEarthSpell = 0
 					Else
@@ -264,8 +294,8 @@ Func BrewSpells()
 			EndIf
 
 			If $iHasteSpellComp > 0 Then ; Haste Spells
-				Local $iTempHasteSpell = Number(getBarracksTroopQuantity(175 + 107 * 2, 296 + $midOffsetY))
-				If $bFullSpell = True Then ;if spell factory full
+				Local $iTempHasteSpell = Number(getBarracksTroopQuantity(175 + 107 * 2, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
 					If $iTempHasteSpell = $iHasteSpellComp Then ; check if replacement spells trained,
 						$iHasteSpell = 0
 					Else
@@ -293,6 +323,37 @@ Func BrewSpells()
 					EndIf
 				Else
 					Setlog("Already done Haste Spell(s)")
+				EndIf
+			EndIf
+			If $iSkeletonSpellComp > 0 Then ; Skeleton Spells
+				Local $iTempSkeletonSpell = Number(getBarracksTroopQuantity(175 + 107 * 3, 295 + $midOffsetY))
+				If $bFullSpell = True and $Fullarmy Then ;if spell factory full
+					If $iTempSkeletonSpell = $iSkeletonSpellComp Then ; check if replacement spells trained,
+						$iSkeletonSpell = 0
+					Else
+						$iSkeletonSpell = $iSkeletonSpellComp - $iTempSkeletonSpell ; add spells to queue to match GUI
+					EndIf
+				Else
+					$iSkeletonSpell = $iSkeletonSpellComp - ($CurSkeletonSpell + $iTempSkeletonSpell) ; not full, add more spell if needed
+				EndIf
+				If $debugsetlogTrain = 1 Then SetLog("Making Skeleton Spell: " & $iSkeletonSpell)
+				If _sleep($iDelayTrain2) Then Return
+				If $iSkeletonSpell > 0 Then
+					If _sleep($iDelayTrain2) Then Return
+					If _ColorCheck(_GetPixelColor(233 + 107 * 3, 375 + $midOffsetY, True), Hex(0xFFFFFF, 6), 20) = False  Then  ; White into number 0
+						setlog("Not enough Elixir to create Skeleton Spell", $COLOR_RED)
+						Return
+					ElseIf _ColorCheck(_GetPixelColor(200, 346 + $midOffsetY, True), Hex(0x414141, 6), 20) Then
+						setlog("Spell Factory Full", $COLOR_RED)
+						Return
+					Else
+						If $iSkeletonSpell > 0 Then
+							GemClick(540, 354 + $midOffsetY, $iSkeletonSpell, $iDelayTrain7, "#0290")
+							SetLog("Created " & $iSkeletonSpell & " Skeleton Spell(s)", $COLOR_BLUE)
+						EndIf
+					EndIf
+				Else
+					Setlog("Already done Skeleton Spell(s)")
 				EndIf
 			EndIf
 		Else

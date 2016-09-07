@@ -13,15 +13,15 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-#include "functions\GUI\GUI_State.au3"
+#include "functions\Other\Synchronization.au3"
+#include "functions\Other\OnAutoItErrorRegisterBot.au3"
 #include "functions\Other\UpdateStatsWall.au3"
-#include "functions\Config\profileFunctions.au3"
 
+#include "functions\Config\profileFunctions.au3"
 #include "functions\Config\applyConfig.au3"
 #include "functions\Config\strategies.au3"
 #include "functions\Config\readConfig.au3"
 #include "functions\Config\saveConfig.au3"
-#include "functions\Config\DelayTimes.au3"
 
 #include "functions\Attack\AttackReport.au3"
 #include "functions\Attack\BuildingSide.au3"
@@ -104,17 +104,21 @@
 #include "functions\CreateArmy\CheckFullArmy.au3"
 #include "functions\CreateArmy\CheckArmyCamp.au3"
 #include "functions\CreateArmy\getArmyCapacity.au3"
+#include "functions\CreateArmy\getArmyCCStatus.au3"
 #include "functions\CreateArmy\getArmyHeroCount.au3"
+#include "functions\CreateArmy\getArmyHeroTime.au3"
 #include "functions\CreateArmy\getArmySpellCapacity.au3"
 #include "functions\CreateArmy\getArmySpellCount.au3"
+#include "functions\CreateArmy\getArmySpellTime.au3"
 #include "functions\CreateArmy\getArmyTroopCount.au3"
+#include "functions\CreateArmy\getArmyTroopTime.au3"
 #include "functions\CreateArmy\isBarrack.au3"
 #include "functions\CreateArmy\openArmyOverview.au3"
 #include "functions\CreateArmy\Spell.au3"
+#include "functions\CreateArmy\SmartWait4Train.au3"
 #include "functions\CreateArmy\TrainClick.au3"
 #include "functions\CreateArmy\Train.au3"
 #include "functions\CreateArmy\TrainIt.au3"
-
 
 #include "functions\Image Search\ImageSearch.au3"
 #include "functions\Image Search\checkDeadBase.au3"
@@ -133,7 +137,7 @@
 #include "functions\Main Screen\RemoveGhostTrayIcons.au3"
 #include "functions\Main Screen\waitMainScreen.au3"
 
-; Android support for MEmu, Droid4X, Nox, BlueStacks...
+; Android support for MEmu, LeapDroid, Droid4X, Nox, BlueStacks...
 #include "functions\Android\AndroidMenuShortcuts.au3"
 #include "functions\Android\Close_OpenCoC.au3"
 #include "functions\Android\ZoomOut.au3"
@@ -143,8 +147,11 @@
 #include "functions\Android\OpenDroid4X.au3"
 #include "functions\Android\CloseDroid4X.au3"
 #include "functions\Android\AndroidMEmu.au3"
+#include "functions\Android\AndroidLeapDroid.au3"
 #include "functions\Android\AndroidNox.au3"
 #include "functions\Android\getBSPos.au3"
+#include "functions\Android\UniversalCloseWaitOpenCoC.au3"
+#include "functions\Android\AndroidEmbed.au3"
 
 #include "functions\Other\WerFaultClose.au3"
 #include "functions\Other\_NumberFormat.au3"
@@ -158,12 +165,11 @@
 #include "functions\Other\ClickOkay.au3"
 #include "functions\Other\ClickRemove.au3"
 #include "functions\Other\CreateLogFile.au3"
-#include "functions\Other\MBRFunc.au3"
+;#include "functions\Other\MBRFunc.au3"
 #include "functions\Other\DebugImageSave.au3"
 #include "functions\Other\DebugSaveDesktopImage.au3"
 #include "functions\Other\ExtendedErrorInfo.au3"
 #include "functions\Other\FindPos.au3"
-#include "functions\Other\ExtMsgBox.au3"
 #include "functions\Other\StringSize.au3"
 #include "functions\Other\SetLog.au3"
 #include "functions\Other\Tab.au3"
@@ -181,6 +187,8 @@
 #include "functions\Other\UpdateStats.au3"
 #include "functions\Other\CheckVersion.au3"
 #include "functions\Other\CloseRunningBot.au3"
+#include "functions\Other\WindowSystemMenu.au3"
+#include "functions\Other\image_get_info.au3"
 
 #include "functions\Other\ComError.au3"
 #include "functions\Other\IsPage.au3"
@@ -199,6 +207,7 @@
 #include "functions\Pixels\boolPixelSearch.au3"
 #include "functions\Pixels\isInsideDiamond.au3"
 
+#include "functions\Read Text\getBuilderCount.au3"
 #include "functions\Read Text\BuildingInfo.au3"
 #include "functions\Read Text\getOcr.au3"
 #include "functions\Read Text\getPBTime.au3"
@@ -214,7 +223,7 @@
 #include "functions\Search\SearchTownHallloc.au3"
 #include "functions\Search\FindTownHall.au3"
 #include "functions\Search\IsSearchModeActive.au3"
-
+#include "functions\Search\IsSearchAttackEnabled.au3"
 
 #include "functions\Village\BoostBarracks.au3"
 #include "functions\Village\BotDetectFirstTime.au3"
@@ -251,10 +260,9 @@
 #include "functions\Village\UpgradeHeroes.au3"
 #include "functions\Village\ClanLevel.au3"
 #include "functions\Village\StarBonus.au3"
+#include "functions\Other\ClickZoneR.au3"
 
 ;
-; MOD files
+; MOD files - AwesomeGamer, LunaEclipse, MikeCoC, ...
 ;
-
-; AwesomeGamer, LunaEclipse, MikeCoC, Promac, ...
 #include "functions\MOD\Include_Files.au3"
