@@ -51,7 +51,8 @@ Local $sModversion
 ; "2106" ; Fix Heroes Ability While in Attack Screen
 ; "2107" ; Fix Telegram + ChatBot
 ; "2200" ; MyBot v6.2.2 ( Remove: Telegram + ChatBot )
-$sModversion = "2201" ; Add Telegram
+; "2201" ; Ad Telegram release ( "t2201" )
+$sModversion = "2202" ; Add Max Logout Time to CCWT + Fix for Telegram
 $sBotVersion = "v6.2.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".t" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
@@ -61,6 +62,7 @@ _GDIPlus_Startup()
 #include "COCBot\GUI\MBR GUI Design Splash.au3"
 #include "COCBot\functions\Config\ScreenCoordinates.au3"
 #include "COCBot\functions\Other\ExtMsgBox.au3"
+#include "COCBot\functions\Mod\Chatbot\Chatbot.au3"
 
 Opt("GUIResizeMode", $GUI_DOCKALL) ; Default resize mode for dock android support
 Opt("GUIEventOptions", 1) ; Handle minimize and restore for dock android support
@@ -187,8 +189,6 @@ If $FoundInstalledAndroid Then
 EndIf
 SetLog(GetTranslated(500, 8, "Android Emulator Configuration: %s", $sAndroidInfo), $COLOR_GREEN)
 
-;AdlibRegister("PushBulletRemoteControl", $PBRemoteControlInterval)
-;AdlibRegister("PushBulletDeleteOldPushes", $PBDeleteOldPushesInterval)
 
 ; Add Telegram extension by CDudz
 $lastmessage = GetLastMsg()
@@ -196,7 +196,6 @@ If $FirstRun = 1 Then
 	$lastremote = $lastuid
 	Getchatid(GetTranslated(620, 92, "select your remote")) ; receive Telegram chat id and send keyboard
 EndIf
-
 
 CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 

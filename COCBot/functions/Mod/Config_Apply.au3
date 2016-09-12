@@ -51,3 +51,28 @@
 	GUICtrlSetData($sldSelectedSpeedAB, $isldSelectedCSVSpeed[$LB])
 	sldSelectedSpeedDB()
 	sldSelectedSpeedAB()
+	
+	;Max logout time
+	If $TrainLogoutMaxTime = 1 Then
+		GUICtrlSetState($chkTrainLogoutMaxTime, $GUI_CHECKED)
+	ElseIf $TrainLogoutMaxTime = 0 Then
+		GUICtrlSetState($chkTrainLogoutMaxTime, $GUI_UNCHECKED)
+	EndIf
+	GUICtrlSetData($txtTrainLogoutMaxTime, $TrainLogoutMaxTimeTXT)	
+	
+	; Telegram Notify - Added by CDudz
+	GUICtrlSetData($TelegramTokenValue, $TelegramToken)
+	
+	If $TelegramEnabled = 1 Then
+		GUICtrlSetState($chkPBenabled2, $GUI_CHECKED)
+		chkPBenabled2()
+	ElseIf $TelegramEnabled = 0 Then
+		GUICtrlSetState($chkPBenabled2, $GUI_UNCHECKED)
+		chkPBenabled2()
+	EndIf
+	
+	If $ichkAlertBuilderIdle = 1 Then
+		GUICtrlSetState($chkAlertBuilderIdle, $GUI_CHECKED)
+	ElseIf $ichkAlertBuilderIdle = 0 Then
+		GUICtrlSetState($chkAlertBuilderIdle, $GUI_UNCHECKED)
+	EndIf

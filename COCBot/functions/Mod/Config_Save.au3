@@ -2,14 +2,14 @@
 ; MOD Config - Save Data
 ;
 
-	; by AwesomeGamer
+	; DEB - by AwesomeGamer
 	If GUICtrlRead($chkDontRemove) = $GUI_CHECKED Then
 		IniWriteS($config, "troop", "DontRemove", 1)
 	Else
 		IniWriteS($config, "troop", "DontRemove", 0)
 	EndIf
 
-	; SmartZap Settings - Added by LunaEclipse
+	; SmartZap - by LunaEclipse
 	If GUICtrlRead($chkSmartLightSpell) = $GUI_CHECKED Then
 		IniWrite($config, "SmartZap", "UseSmartZap", 1)
 	Else
@@ -43,3 +43,28 @@
    ; CSV Deployment Speed Mod
 	IniWriteS($config, "attack", "CSVSpeedDB", $isldSelectedCSVSpeed[$DB])
 	IniWriteS($config, "attack", "CSVSpeedAB", $isldSelectedCSVSpeed[$LB])
+
+	; Max logout time
+	If GUICtrlRead($chkTrainLogoutMaxTime) = $GUI_CHECKED Then
+		IniWrite($config, "TrainLogout", "TrainLogoutMaxTime", 1)
+	Else
+		IniWrite($config, "TrainLogout", "TrainLogoutMaxTime", 0)
+	EndIf
+	IniWrite($config, "TrainLogout", "TrainLogoutMaxTimeTXT", GUICtrlRead($txtTrainLogoutMaxTime))
+	
+	; Telegram Notify - Added by CDudz
+	$TelegramToken = GUICtrlRead($TelegramTokenValue)
+	IniWriteS($config, "pushbullet", "AccountToken2", $TelegramToken)
+	IniWriteS($config, "pushbullet", "PBEnabled2", $TelegramEnabled)	
+	
+	If GUICtrlRead($chkPBenabled2) = $GUI_CHECKED Then
+		$TelegramEnabled = 1
+	Else
+		$TelegramEnabled = 0
+	EndIf
+	
+	If GUICtrlRead($chkAlertBuilderIdle) = $GUI_CHECKED Then
+		IniWriteS($config, "pushbullet", "AlertBuilderIdle", "1")
+	Else
+		IniWriteS($config, "pushbullet", "AlertBuilderIdle", "0")
+	EndIf	
