@@ -66,14 +66,15 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 			_GUICtrlComboBox_SetCurSel(-1,0)
 			GUICtrlSetState (-1, $GUI_DISABLE)
 		$y += 30
-		$lblPushBulletTokenValue = GUICtrlCreateLabel(GetTranslated(619,14, "Access Token") & ":", $x, $y, -1, -1, $SS_RIGHT)
+		$lblPushBulletTokenValue = GUICtrlCreateLabel(GetTranslated(619,14, "Access Token (PB)") & ":", $x, $y, -1, -1, $SS_RIGHT)
 		$PushBulletTokenValue = GUICtrlCreateInput("", $x + 120, $y - 3, 280, 19)
 			_GUICtrlSetTip(-1, GetTranslated(619,15, "You need a Token to use PushBullet notifications. Get a token from PushBullet.com"))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		;Modified by CDudz
 		$lblTelegramTokenValue = GUICtrlCreateLabel(GetTranslated(619,14, "Access Token") & ":", $x, $y+23, -1, -1, $SS_RIGHT)
 		$TelegramTokenValue = GUICtrlCreateInput("", $x + 85, $y +22, 315, 19)
-		GUICtrlSetState(-1, $GUI_DISABLE)
+			_GUICtrlSetTip(-1, "You need a Token to use Telegram notifications")
+			GUICtrlSetState(-1, $GUI_DISABLE)
 		
 		$y += 25		
 		$lblOrigPushBullet = GUICtrlCreateLabel(GetTranslated(619,16, "Origin") & ":", $x+220, $y+25, -1, -1, $SS_RIGHT)
@@ -83,7 +84,7 @@ $hGUI_NOTIFY_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,18,"PushBullet/T
 			_GUICtrlSetTip(-1, $txtTip)
 			GUICtrlSetState(-1, $GUI_DISABLE)
 		$y += 25
-		$lblNotifyPBWhen = GUICtrlCreateLabel(GetTranslated(619,18, "Send a PushBullet message for these options") & ":", $x, $y, -1, -1, $SS_RIGHT)
+		$lblNotifyPBWhen = GUICtrlCreateLabel(GetTranslated(619,18, "Send messages for these options (PB/Telegram)") & ":", $x, $y, -1, -1, $SS_RIGHT)
 		$y += 15
 		$chkAlertPBVMFound = GUICtrlCreateCheckbox(GetTranslated(619,19, "Match Found"), $x + 10, $y)
 			_GUICtrlSetTip(-1, GetTranslated(619,20, "Send the amount of available loot when bot finds a village to attack."))

@@ -36,6 +36,9 @@ Global Const $drillLevelSteal[6] = [59, _
 Global $iChkDontRemove = 1
 Global $chkDontRemove = True
 
+; BarrackSpell
+Global $iChkBarrackSpell, $chkBarrackSpell
+
 ; CSV Mod
 Global $attackcsv_use_red_line = 1
 Global $TroopDropNumber = 0
@@ -72,6 +75,10 @@ $iCSVSpeeds[12] = 3
 
 ; Telegram extension
 Global $TelegramEnabled
+Global $TroopSpellStats[0][2] = [[]]
+Global $iLastAtkTime
+Global $ichkAlertBuilderIdle
+Global $iReportIdleBuilder = 0
 
 ;
 ; TheRevenor

@@ -52,7 +52,8 @@ Local $sModversion
 ; "2107" ; Fix Telegram + ChatBot
 ; "2200" ; MyBot v6.2.2 ( Remove: Telegram + ChatBot )
 ; "2201" ; Ad Telegram release ( "t2201" )
-$sModversion = "2202" ; Add Max Logout Time to CCWT + Fix for Telegram
+; "2202" ; Add Max Logout Time to CCWT + Fix for Telegram
+$sModversion = "2203" ; New Fix for Telegram + Fix "Attack Now" + "Spell Barrack Mode" ( Thanks to @Eloy )
 $sBotVersion = "v6.2.2" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it it also use on Checkversion()
 $sBotTitle = "My Bot " & $sBotVersion & ".t" & $sModversion & " " ;~ Don't use any non file name supported characters like \ / : * ? " < > |
 
