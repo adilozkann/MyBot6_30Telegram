@@ -7,7 +7,7 @@
 #include "SmartZap\smartZap.au3"
 
 ; Chatbot
-#include "Chatbot\Chatbot.au3"
+; #include "Chatbot\Chatbot.au3" ; in file "MyBot.run.au3"
 
 ; CollectorsOutside
 #include "CollectorsOutside\AreCollectorsOutside.au3"
