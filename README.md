@@ -1,4 +1,4 @@
-﻿﻿ What is it?
+? What is it?
   -----------
 - A Free Clash of Clans bot. 
 - A bot is a general term in gaming that is used to refer to a character controlled by a computer.
@@ -24,7 +24,7 @@ Essential software :
 - MyBot last version avaiable
 - DON´T USE THE OLD CONFIG FILES
 
-Licensing
+Licensing 2016
   ---------
 Please see the file called LICENSE.
 - MyBot autoit code is open sourced under GNU GENERAL PUBLIC LICENSE v3
