@@ -27,18 +27,27 @@ Func _GetRedArea()
 	Local $colorVariation = 40
 	Local $xSkip = 1
 	Local $ySkip = 5
+	Local $result
 
 	If $iMatchMode = $LB And $iChkDeploySettings[$LB] = 4 Then ; Used for DES Side Attack (need to know the side the DES is on)
-		Local $result = DllCall($hFuncLib, "str", "getRedAreaSideBuilding", "ptr", $hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation, "int", $eSideBuildingDES)
+		$result = DllCall($hFuncLib, "str", "getRedAreaSideBuilding", "ptr", $hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation, "int", $eSideBuildingDES)
 		If $debugSetlog Then Setlog("Debug: Redline with DES Side chosen")
 	ElseIf $iMatchMode = $LB And $iChkDeploySettings[$LB] = 5 Then ; Used for TH Side Attack (need to know the side the TH is on)
-		Local $result = DllCall($hFuncLib, "str", "getRedAreaSideBuilding", "ptr", $hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation, "int", $eSideBuildingTH)
+		$result = DllCall($hFuncLib, "str", "getRedAreaSideBuilding", "ptr", $hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation, "int", $eSideBuildingTH)
 		If $debugSetlog Then Setlog("Debug: Redline with TH Side chosen")
 	Else ; Normal getRedArea
-		Local $result = DllCall($hFuncLib, "str", "getRedArea", "ptr", $hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation)
+		;Local $result = DllCall($hFuncLib, "str", "getRedArea", "ptr", $hHBitmap2, "int", $xSkip, "int", $ySkip, "int", $colorVariation)
+		$PixelTopLeft = StringReplace(GetOffSetRedline("TL"), ",", "-")
+		$PixelBottomLeft = StringReplace(GetOffSetRedline("BL"), ",", "-")
+		$PixelBottomRight = StringReplace(GetOffSetRedline("BR"), ",", "-")
+		$PixelTopRight = StringReplace(GetOffSetRedline("TR"), ",", "-")
+		Local $listPixelBySide = ["ImgLoc", $PixelTopLeft, $PixelBottomLeft, $PixelBottomRight, $PixelTopRight]
 		If $debugSetlog Then Setlog("Debug: Redline chosen")
 	EndIf
-	Local $listPixelBySide = StringSplit($result[0], "#")
+
+	If IsArray($result) Then
+		Local $listPixelBySide = StringSplit($result[0], "#")
+	EndIf
 	$PixelTopLeft = GetPixelSide($listPixelBySide, 1)
 	$PixelBottomLeft = GetPixelSide($listPixelBySide, 2)
 	$PixelBottomRight = GetPixelSide($listPixelBySide, 3)
@@ -51,9 +60,9 @@ Func _GetRedArea()
 
 	;If Milking Attack ($iAtkAlgorithm[$DB] = 2) or AttackCSV skip calc of troops further offset (archers drop points for standard attack)
 	; but need complete calc if use standard attack after milking attack ($MilkAttackAfterStandardAtk =1) and use redarea ($iChkRedArea[$MA] = 1)
-    ;If $debugsetlog = 1 Then Setlog("REDAREA matchmode " & $iMatchMode & " atkalgorithm[0] = " & $iAtkAlgorithm[$DB] & " $MilkAttackAfterScriptedAtk = " & $MilkAttackAfterScriptedAtk , $color_aqua)
+    ;If $debugsetlog = 1 Then Setlog("REDAREA matchmode " & $iMatchMode & " atkalgorithm[0] = " & $iAtkAlgorithm[$DB] & " $MilkAttackAfterScriptedAtk = " & $MilkAttackAfterScriptedAtk , $COLOR_DEBUG1)
     If ($iMatchMode = $DB And $iAtkAlgorithm[$DB] = 2  ) OR ($iMatchMode = $DB and $ichkUseAttackDBCSV = 1) OR ($iMatchMode = $LB and $ichkUseAttackABCSV = 1) Then
-	   If $debugsetlog=1 Then setlog("redarea no calc pixel further (quick)",$color_purple)
+	   If $debugsetlog=1 Then setlog("redarea no calc pixel further (quick)",$COLOR_DEBUG)
 		$count = 0
 		ReDim $PixelTopLeftFurther[UBound($PixelTopLeft)]
 		For $i = 0 To UBound($PixelTopLeft) - 1
@@ -83,9 +92,8 @@ Func _GetRedArea()
 			$PixelRedAreaFurther[$count] = $PixelBottomRightFurther[$i]
 			$count += 1
 		Next
-		debugRedArea("PixelTopLeftFurther* " & UBound($PixelTopLeftFurther))
 	 Else
-		If $debugsetlog=1 Then setlog("redarea calc pixel further",$color_purple)
+		If $debugsetlog=1 Then setlog("redarea calc pixel further",$COLOR_DEBUG)
 		$count = 0
 		ReDim $PixelTopLeftFurther[UBound($PixelTopLeft)]
 		For $i = 0 To UBound($PixelTopLeft) - 1
@@ -115,7 +123,6 @@ Func _GetRedArea()
 			$PixelRedAreaFurther[$count] = $PixelBottomRightFurther[$i]
 			$count += 1
 		Next
-		debugRedArea("PixelTopLeftFurther " & UBound($PixelTopLeftFurther))
 	EndIf
 
 	If UBound($PixelTopLeft) < 10 Then

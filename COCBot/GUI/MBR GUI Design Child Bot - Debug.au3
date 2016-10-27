@@ -49,26 +49,77 @@ $grpDebug = GUICtrlCreateGroup(GetTranslated(636,34, "Debug"), $x - 20, $y - 20,
 		_GUICtrlSetTip(-1, GetTranslated(636,92, "Debug: make ocr of donations and simulate only donate but no donate any troop"))
 		GUICtrlSetState(-1, $GUI_DISABLE)
 		GUICtrlSetState(-1, $GUI_HIDE)
+	$y += 20
+	$chkdebugAttackCSV = GUICtrlCreateCheckbox(GetTranslated(636,106, "Attack CSV"), $x , $y-5, -1, -1)
+		_GUICtrlSetTip(-1, GetTranslated(636, 107, "Debug: Generates special CSV parse log files"))
+		GUICtrlSetState(-1, $GUI_DISABLE)
+		GUICtrlSetState(-1, $GUI_HIDE)
+	$y += 20
+	$chkmakeIMGCSV = GUICtrlCreateCheckbox(GetTranslated(636,108, "Attack CSV Image"), $x , $y-5, -1, -1)
+		_GUICtrlSetTip(-1, GetTranslated(636, 109, "Debug: Enables saving clean and location marked up images of bases attacked by CSV scripts"))
+		GUICtrlSetState(-1, $GUI_DISABLE)
+		GUICtrlSetState(-1, $GUI_HIDE)
+	$y += 20
+	$chkDebugDisableZoomout = GUICtrlCreateCheckbox(GetTranslated(636,112, "Disable Zoomout"), $x , $y-5, -1, -1)
+		_GUICtrlSetTip(-1, GetTranslated(636,113, "Debug: Disables zoomout of village."))
+		GUICtrlSetState(-1, $GUI_DISABLE)
+		GUICtrlSetState(-1, $GUI_HIDE)
+	$y += 20
+	$chkDebugDisableVillageCentering = GUICtrlCreateCheckbox(GetTranslated(636,113, "Disable Village Centering"), $x , $y-5, -1, -1)
+		_GUICtrlSetTip(-1, GetTranslated(636,114, "Debug: Disables centering of village."))
+		GUICtrlSetState(-1, $GUI_DISABLE)
+		GUICtrlSetState(-1, $GUI_HIDE)
 
 Local $x = 295
-$y = 45
-	$btnTestTrain = GUICtrlCreateButton(GetTranslated(636,88, "Test Train"), $x  , $y , 140, 30)
+$y = 40
+Local $yNext = 30
+	$btnTestTrain = GUICtrlCreateButton(GetTranslated(636,88, "Test Train"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$y += 35
+	$btnTestDonateCC = GUICtrlCreateButton(GetTranslated(636,89, "Test Donate"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$btnTestDonateCC = GUICtrlCreateButton(GetTranslated(636,89, "Test Donate"), $x  , $y , 140, 30)
+	$btnTestRequestCC = GUICtrlCreateButton(GetTranslated(636,110, "Test Request"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$y += 35
+	$btnTestAttackBar = GUICtrlCreateButton(GetTranslated(636,90, "Test Attack Bar"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$btnTestAttackBar = GUICtrlCreateButton(GetTranslated(636,90, "Test Attack Bar"), $x  , $y , 140, 30)
+	$btnTestClickDrag = GUICtrlCreateButton(GetTranslated(636,102, "Test Click Drag (scrolling)"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$y += 35
+	$btnTestImage = GUICtrlCreateButton(GetTranslated(636,103, "Test Image"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$btnTestClickDrag = GUICtrlCreateButton(GetTranslated(636,102, "Test Click Drag (scrolling)"), $x  , $y , 140, 30)
+	$btnTestVillageSize = GUICtrlCreateButton(GetTranslated(636,111, "Test Village Size"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$y += 35
+	$btnTestDeadBase = GUICtrlCreateButton(GetTranslated(636,115, "Test Dead Base"), $x  , $y , 140, 25)
+	$y += $yNext
 
-	$btnTestImage = GUICtrlCreateButton(GetTranslated(636,103, "Test Image"), $x  , $y , 140, 30)
+	$btnTestTHimgloc = GUICtrlCreateButton("imgloc TH", $x  , $y , 140, 25)
+	$y += $yNext
+
+	$btnTestTrainsimgloc = GUICtrlCreateButton("New Train Test", $x  , $y , 140, 25)
+	$y += $yNext
+
+	$btnTestQuickTrainsimgloc = GUICtrlCreateButton("Quick Train Test", $x  , $y , 140, 25)
+
+	; now go up again
+	$x -= 150
+
+	$txtTestFindButton = GUICtrlCreateInput("BoostOne", $x - 90, $y + 3, 85, 20)
+	$btnTestFindButton = GUICtrlCreateButton(GetTranslated(636,118, "Test Find Button"), $x  , $y , 140, 25)
+	$y -= $yNext
+
+	$btnTestDeadBaseFolder = GUICtrlCreateButton(GetTranslated(636,116, "Test Dead Base Folder"), $x  , $y , 140, 25)
+	$y -= $yNext
+
+	$btnTestAttackCSV = GUICtrlCreateButton(GetTranslated(636,117, "Test Attack CSV"), $x  , $y , 140, 25)
+	$y -= $yNext
+
+	$btnTestimglocTroopBar = GUICtrlCreateButton("IMGLOC ATTACKBAR", $x  , $y , 140, 25)
+	$y -= $yNext
 
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
