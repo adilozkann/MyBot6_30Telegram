@@ -6,15 +6,15 @@
 #include "SmartZap\drillSearch.au3"
 #include "SmartZap\smartZap.au3"
 
-; Chatbot
-; #include "Chatbot\Chatbot.au3" ; in file "MyBot.run.au3"
+; Chatbot - While in file "MyBot.run.au3"
+; #include "Chatbot\Chatbot.au3" 
 
-; CollectorsOutside
-#include "CollectorsOutside\AreCollectorsOutside.au3"
+; CollectorsOutside - Not used for now
+; #include "CollectorsOutside\AreCollectorsOutside.au3"
 
 ;
 ; Misc
 ;
 
-; GUI
-#include "GUI_Functions.au3"
+; GUI ( While in \MyBot\MBR GUI Control.au3 )
+; #include "MBR GUI Control.au3"
